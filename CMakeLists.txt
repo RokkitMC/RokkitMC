@@ -9,6 +9,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 file(GLOB_RECURSE sources "src/*.cpp" "include/*.h" "src/*.c" "include/*.hpp")
 
-add_executable(RokkitMC ${sources})
+add_library(RokkitMC SHARED ${sources})
 
 target_link_libraries(RokkitMC PRIVATE subhook)

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(RokkitMC)
 
-set(BUILD_TESTING off) #Stops subhook erroring due to no 64 bit test
+set(BUILD_TESTING off) #Stops subhook erroring due to no 64 bit test. Fuck you
 add_subdirectory(lib/subhook)
 include_directories(lib/subhook)
 include_directories(include)

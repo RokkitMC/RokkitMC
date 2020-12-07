@@ -8,8 +8,8 @@ include_directories(include)
 
 set(CMAKE_CXX_STANDARD 20)
 
-file(GLOB_RECURSE sources "src/*.cpp" "include/*.h" "src/*.c" "include/*.hpp")
+file(GLOB_RECURSE sources src/*.cpp include/*.h src/*.c include/*.hpp include/Rokkit/*.h include/Rokkit/*.hpp include/Rokkit/*.cpp)
 
-add_library(RokkitMC SHARED ${sources} include/hooks.h include/logger.h)
-
+add_library(RokkitMC SHARED ${sources})
+message(${sources})
 target_link_libraries(RokkitMC PRIVATE subhook)

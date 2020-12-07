@@ -34,9 +34,6 @@ public:
     static void Warn(const char* message) {
         std::cout << YELLOW << "[RokkitMC]: " << message << RESET;
     }
-    static void InfoF(const char* fmt, ...) {
-        printf(fmt);
-    }
 };
 
 #endif //ROKKITMC_LOGGER_H

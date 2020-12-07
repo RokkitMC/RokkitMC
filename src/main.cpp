@@ -2,8 +2,7 @@
 #include "hooks.h"
 #include "logger.h"
 #include "Rokkit/Rokkit.h"
-using std::cout;
-using std::string;
+using std::cout, std::string, std::endl;
 using subhook::Hook;
 
 subhook_t clientAuthHook;
@@ -12,21 +11,20 @@ void* clientAuthOrig;
 subhook_t playerMessageHook;
 void* playerMessageOrig;
 
-typedef uint64_t (*playerMessage_t)(unsigned int, string, string, string, string);
+typedef uint64_t (*playerMessage_t)(uint64_t*, string, string, string, string);
 
-uint64_t playerMessage(unsigned int self, string sender, string reciever, string message, string messageType) {
-	cout << sender << " : " << message;
+uint64_t playerMessage(uint64_t* self, string sender, string receiver, string message, string messageType) {
+	cout << sender << " : " << message << endl;
 	
 	subhook_remove(playerMessageHook);
 	auto original = (playerMessage_t)playerMessageOrig;
-	auto result = original(self, sender, reciever, message, messageType);
+	auto result = original(self, sender, receiver, message, messageType);
 	subhook_install(playerMessageHook);
 
 	return result;
 }
 
 typedef uint64_t(*clientAuthenticated_t)(int64_t*, int64_t*, Rokkit::Certificate*);
-typedef char* (*getIdentityName_t)(string*, int64_t*);
 
 uint64_t clientAuthenticated(int64_t* self, int64_t* ni, Rokkit::Certificate* cert) {
     Logger::Info("Client Authenticated!\n");

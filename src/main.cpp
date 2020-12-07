@@ -10,13 +10,19 @@ subhook_t clientAuthHook;
 void* clientAuthOrig;
 
 typedef uint64_t(*clientAuthenticated_t)(int64_t*, int64_t*, int64_t*);
+typedef char* (*getIdentityName_t)(string*, int64_t*);
 
 uint64_t clientAuthenticated(int64_t* self, int64_t* ni, int64_t* cert) {
     Logger::Info("Client Authenticated!\n");
+    string username;
+    auto getIdentityName = (getIdentityName_t)dlsym(RTLD_DEFAULT, "_ZN19ExtendedCertificate15getIdentityNameB5cxx11ERK11Certificate");
+    getIdentityName(&username, cert);
+    printf("Player name is: %s");
     subhook_remove(clientAuthHook);
     auto original = (clientAuthenticated_t)clientAuthOrig;
     auto result = original(self, ni, cert);
     subhook_install(clientAuthHook);
+
     return result;
 }
 

@@ -26,13 +26,16 @@
 class Logger {
 public:
     static void Info(const char* message) {
-        std::cout << WHITE << "[INFO]: " << message << RESET;
+        std::cout << WHITE << "[RokkitMC]: " << message << RESET;
     }
     static void Error(const char* message) {
-        std::cout << RED << "[ERROR]: " << message << RESET;
+        std::cout << RED << "[RokkitMC]: " << message << RESET;
     }
     static void Warn(const char* message) {
-        std::cout << YELLOW << "[WARNING]: " << message << RESET;
+        std::cout << YELLOW << "[RokkitMC]: " << message << RESET;
+    }
+    static void InfoF(const char* fmt, ...) {
+        printf(fmt);
     }
 };
 

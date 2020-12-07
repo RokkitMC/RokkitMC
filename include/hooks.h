@@ -7,6 +7,8 @@
 #include <iostream>
 #include <list>
 #include <subhook.h>
+#include <dlfcn.h>
+#include "logger.h"
 
 std::list<subhook_t> activeHooks;
 
@@ -15,7 +17,8 @@ subhook_t Hook (void** original, void* hook, const char* funcName) {
     subhook_t newHook = subhook_new(*original, hook, static_cast<subhook_flags>(0));
     int rc = subhook_install(newHook);
     if(rc != 0)
-        printf("Error hooking %s", funcName);
+        printf("%s[RokkitMC]: Error hooking %s %s\n", RED, funcName, RESET);
+    activeHooks.insert(activeHooks.end(), newHook);
     return newHook;
 }
 #endif //ROKKITMC_HOOKS_H

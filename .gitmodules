@@ -1,3 +1,6 @@
 [submodule "lib/subhook"]
 	path = lib/subhook
 	url = https://github.com/Zeex/subhook.git
+[submodule "lib/jsoncpp"]
+	path = lib/jsoncpp
+	url = https://github.com/open-source-parsers/jsoncpp

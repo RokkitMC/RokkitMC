@@ -1,6 +1,7 @@
 #include "hooks.h"
 #include "logger.h"
 #include "Rokkit/Rokkit.h"
+#include "ModLoader.h"
 using std::cout, std::string, std::endl;
 using subhook::Hook;
 
@@ -9,6 +10,9 @@ void* clientAuthOrig;
 
 subhook_t playerMessageHook;
 void* playerMessageOrig;
+
+subhook_t recordEventHook;
+void* recordEventOriginal;
 
 typedef uint64_t (*playerMessage_t)(uint64_t*, string, string, string, string);
 
@@ -38,11 +42,26 @@ uint64_t clientAuthenticated(int64_t* self, int64_t* ni, Rokkit::Certificate* ce
     return result;
 }
 
+typedef uint64_t(*recordEvent_t)(int64_t*, Rokkit::Event*);
+
+uint64_t recordEvent(int64_t* self, Rokkit::Event* event) {
+    Logger::Info("Event fired\n");
+    subhook_remove(recordEventHook);
+    auto original = (recordEvent_t)recordEventOriginal;
+    auto result = original(self, event);
+    subhook_install(recordEventHook);
+    return result;
+}
+
 void entry() {
     string version = "1.16.20";
     printf("[RokkitMC]: Loading RokkitMC for BDS: %s!\n", version.c_str());
     clientAuthHook = Hook(&clientAuthOrig, (void*)clientAuthenticated, "_ZN20ServerNetworkHandler22_onClientAuthenticatedERK17NetworkIdentifierRK11Certificate");
     playerMessageHook = Hook(&playerMessageOrig, (void*) playerMessage, "_ZN17MinecraftEventing22fireEventPlayerMessageERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_S7_");
+    recordEventHook = Hook(&recordEventOriginal, (void*) recordEvent, "_ZN6Social6Events12EventManager11recordEventERNS0_5EventE");
+
+    //Do JVM init last
+    Rokkit::ModLoader* modLoader = new Rokkit::ModLoader(JNI_VERSION_1_8);
 }
 
 static struct init {

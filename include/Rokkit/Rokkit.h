@@ -6,4 +6,5 @@
 #define ROKKITMC_ROKKIT_H
 #include "Player.h"
 #include "Certificate.h"
+#include "Event.h"
 #endif //ROKKITMC_ROKKIT_H

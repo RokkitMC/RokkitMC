@@ -27,7 +27,7 @@
 class Logger {
 public:
     static void Info(const char* message) {
-        std::cout << WHITE << "[RokkitMC]: " << message << RESET;
+        std::cout << GREEN << "[RokkitMC]: " << WHITE << message << RESET;
     }
     static void Error(const char* message) {
         std::cout << RED << "[RokkitMC]: " << message << RESET;

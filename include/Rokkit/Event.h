@@ -4,11 +4,11 @@
 
 #ifndef ROKKITMC_EVENT_H
 #define ROKKITMC_EVENT_H
-
+#include "json.h"
 namespace Rokkit {
     class Event {
     public:
-        std::string propertiesAsJsonValue();
+        Json::Value* propertiesAsJsonValue();
     };
 }
 

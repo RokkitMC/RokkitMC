@@ -1,4 +1,3 @@
-#include <thread>
 #include "hooks.h"
 #include "logger.h"
 #include "Rokkit/Rokkit.h"
@@ -14,8 +13,8 @@ void* playerMessageOrig;
 typedef uint64_t (*playerMessage_t)(uint64_t*, string, string, string, string);
 
 uint64_t playerMessage(uint64_t* self, string sender, string receiver, string message, string messageType) {
-	cout << sender << " : " << message << endl;
-	
+	cout << "[RokkitMC]: " << sender << ": " << message << endl;
+
 	subhook_remove(playerMessageHook);
 	auto original = (playerMessage_t)playerMessageOrig;
 	auto result = original(self, sender, receiver, message, messageType);
@@ -29,7 +28,7 @@ typedef uint64_t(*clientAuthenticated_t)(int64_t*, int64_t*, Rokkit::Certificate
 uint64_t clientAuthenticated(int64_t* self, int64_t* ni, Rokkit::Certificate* cert) {
     Logger::Info("Client Authenticated!\n");
     Rokkit::Player player(cert);
-    printf("[RokkitMC]: Player name is: %s\n", player.Name.c_str());
+    cout << "[RokkitMC]: Player name is: " << player.Name;
 
     subhook_remove(clientAuthHook);
     auto original = (clientAuthenticated_t)clientAuthOrig;
@@ -40,7 +39,7 @@ uint64_t clientAuthenticated(int64_t* self, int64_t* ni, Rokkit::Certificate* ce
 }
 
 void entry() {
-    string version = "1.16.10";
+    string version = "1.16.20";
     printf("[RokkitMC]: Loading RokkitMC for BDS: %s!\n", version.c_str());
     clientAuthHook = Hook(&clientAuthOrig, (void*)clientAuthenticated, "_ZN20ServerNetworkHandler22_onClientAuthenticatedERK17NetworkIdentifierRK11Certificate");
     playerMessageHook = Hook(&playerMessageOrig, (void*) playerMessage, "_ZN17MinecraftEventing22fireEventPlayerMessageERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_S7_");

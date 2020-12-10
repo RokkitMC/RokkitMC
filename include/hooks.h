@@ -12,7 +12,8 @@
 
 std::list<subhook_t> activeHooks;
 
-subhook_t Hook (void** original, void* hook, const char* funcName) {
+subhook_t Hook (void** original, void* hook, const char* funcName)
+{
     *original = dlsym(RTLD_DEFAULT, funcName);
     subhook_t newHook = subhook_new(*original, hook, static_cast<subhook_flags>(0));
     int rc = subhook_install(newHook);

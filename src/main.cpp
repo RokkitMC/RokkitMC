@@ -1,7 +1,9 @@
 #include "hooks.h"
 #include "logger.h"
 #include "Rokkit/Rokkit.h"
-#include "ModLoader.h"
+#include "PluginLoader.h"
+#include <unordered_map>
+
 using std::cout, std::string, std::endl;
 using subhook::Hook;
 
@@ -44,9 +46,17 @@ uint64_t clientAuthenticated(int64_t* self, int64_t* ni, Rokkit::Certificate* ce
 
 typedef uint64_t(*recordEvent_t)(int64_t*, Rokkit::Event*);
 
+typedef std::string(*getName_t)(int64_t*);
+
 uint64_t recordEvent(int64_t* self, Rokkit::Event* event) {
     Logger::Info("Event fired\n");
     //cout << event->propertiesAsJsonValue()->toStyledString() << endl;
+    std::unordered_map<string, int64_t*> properties = *(std::unordered_map<string, int64_t*>*)(event+64);
+    for (std::pair<std::string, int64_t*> element : properties)
+    {
+        std::cout << element.first << " :: " << element.second << std::endl;
+    }
+
     subhook_remove(recordEventHook);
     auto original = (recordEvent_t)recordEventOriginal;
     auto result = original(self, event);
@@ -62,7 +72,7 @@ void entry() {
     recordEventHook = Hook(&recordEventOriginal, (void*) recordEvent, "_ZN6Social6Events12EventManager11recordEventERNS0_5EventE");
     printf("%d", recordEventOriginal);
     //Do JVM init last
-    Rokkit::ModLoader* modLoader = new Rokkit::ModLoader(JNI_VERSION_1_8);
+    Rokkit::PluginLoader* pluginLoader = new Rokkit::PluginLoader(JNI_VERSION_1_8);
 }
 
 static struct init {

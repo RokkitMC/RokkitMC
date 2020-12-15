@@ -13,6 +13,8 @@ RUN apt-get update && apt-get install -y cmake openjdk-8-jdk yasm
 
 RUN git submodule update --init --recursive
 
-RUN cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" .
+RUN echo "" > ./lib/jsoncpp/include/PreventInSourceBuilds.cmake
+
+RUN cmake .
 
 RUN cmake --build ./out --target RokkitMC

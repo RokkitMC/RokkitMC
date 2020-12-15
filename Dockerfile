@@ -17,4 +17,4 @@ RUN echo "" > ./lib/jsoncpp/include/PreventInSourceBuilds.cmake
 
 RUN cmake .
 
-RUN mkdir out && cmake --build ./out --target RokkitMC
+RUN cmake --build . --target RokkitMC

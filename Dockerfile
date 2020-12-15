@@ -11,6 +11,8 @@ RUN apt-add-repository 'deb http://security.debian.org/debian-security stretch/u
 
 RUN apt-get update && apt-get install -y cmake openjdk-8-jdk yasm
 
+RUN git submodule update --init --recursive
+
 RUN cmake .
 
 RUN cmake --build ./out --target RokkitMC

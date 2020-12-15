@@ -2,9 +2,11 @@ FROM gcc:10.2
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN echo deb http://ftp.us.debian.org/debian sid main >> /etc/apt/sources.list
+RUN apt update && apt install software-properties-common
 
-RUN apt-get install -y cmake openjdk-8-jdk yasm
+RUN apt-add-repository 'deb http://security.debian.org/debian-security stretch/updates main'
+
+RUN apt-get update && apt-get install -y cmake openjdk-8-jdk yasm
 
 RUN cmake .
 

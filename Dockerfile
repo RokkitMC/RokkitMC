@@ -2,7 +2,7 @@ FROM gcc:10.2
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt update && apt install software-properties-common
+RUN apt update && apt install -y software-properties-common
 
 RUN apt-add-repository 'deb http://security.debian.org/debian-security stretch/updates main'
 

@@ -13,6 +13,6 @@ RUN apt-get update && apt-get install -y cmake openjdk-8-jdk yasm
 
 RUN git submodule update --init --recursive
 
-RUN cmake .
+RUN cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" .
 
 RUN cmake --build ./out --target RokkitMC

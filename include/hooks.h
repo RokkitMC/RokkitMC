@@ -7,14 +7,26 @@
 #include <iostream>
 #include <list>
 #include <subhook.h>
+
+#ifdef __unix__
 #include <dlfcn.h>
+#endif
+
 #include "logger.h"
 
 std::list<subhook_t> activeHooks;
 
+void* GetSymbol(const char* funcName) {
+#ifdef __unix__
+    return dlsym(RTLD_DEFAULT, funcName);
+#elif defined(_WIN32) || defined(WIN32)
+#error "Not implemented"
+#endif
+}
+
 subhook_t Hook (void** original, void* hook, const char* funcName)
 {
-    *original = dlsym(RTLD_DEFAULT, funcName);
+    *original = GetSymbol(funcName);
     subhook_t newHook = subhook_new(*original, hook, static_cast<subhook_flags>(0));
     int rc = subhook_install(newHook);
     if(rc != 0)

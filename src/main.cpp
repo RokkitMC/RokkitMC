@@ -61,6 +61,7 @@ uint64_t recordEvent(int64_t* self, Rokkit::Event* event) {
     auto original = (recordEvent_t)recordEventOriginal;
     auto result = original(self, event);
     subhook_install(recordEventHook);
+    Logger::Info("Success");
     return result;
 }
 
@@ -70,7 +71,6 @@ void entry() {
     clientAuthHook = Hook(&clientAuthOrig, (void*)clientAuthenticated, "_ZN20ServerNetworkHandler22_onClientAuthenticatedERK17NetworkIdentifierRK11Certificate");
     playerMessageHook = Hook(&playerMessageOrig, (void*) playerMessage, "_ZN17MinecraftEventing22fireEventPlayerMessageERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_S7_");
     recordEventHook = Hook(&recordEventOriginal, (void*) recordEvent, "_ZN6Social6Events12EventManager11recordEventERNS0_5EventE");
-    printf("%d", recordEventOriginal);
     //Do JVM init last
     Rokkit::PluginLoader* pluginLoader = new Rokkit::PluginLoader(JNI_VERSION_1_8);
 }

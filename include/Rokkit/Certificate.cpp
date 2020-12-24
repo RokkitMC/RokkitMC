@@ -3,6 +3,7 @@
 //
 #include "Rokkit.h"
 #include "hooks.h"
+
 typedef void (*getIdentityName_t)(string*, Rokkit::Certificate*);
 namespace Rokkit {
     std::string Certificate::getIdentityName() {

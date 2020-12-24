@@ -14,24 +14,8 @@
 
 #include "logger.h"
 
-std::list<subhook_t> activeHooks;
+void* GetSymbol(const char* funcName);
+subhook_t Hook(void** original, void* hook, const char* funcName);
+std::list<subhook_t> GetHooks();
 
-void* GetSymbol(const char* funcName) {
-#ifdef __unix__
-    return dlsym(RTLD_DEFAULT, funcName);
-#elif defined(_WIN32) || defined(WIN32)
-#error "Not implemented"
-#endif
-}
-
-subhook_t Hook (void** original, void* hook, const char* funcName)
-{
-    *original = GetSymbol(funcName);
-    subhook_t newHook = subhook_new(*original, hook, static_cast<subhook_flags>(0));
-    int rc = subhook_install(newHook);
-    if(rc != 0)
-        printf("%s[RokkitMC]: Error hooking %s %s\n", RED, funcName, RESET);
-    activeHooks.insert(activeHooks.end(), newHook);
-    return newHook;
-}
 #endif //ROKKITMC_HOOKS_H

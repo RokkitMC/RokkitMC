@@ -1,6 +1,6 @@
-#include "hooks.h"
 #include "logger.h"
 #include "Rokkit/Rokkit.h"
+#include "hooks.h"
 #include "PluginLoader.h"
 #include <unordered_map>
 
@@ -61,7 +61,7 @@ uint64_t recordEvent(int64_t* self, Rokkit::Event* event) {
     auto original = (recordEvent_t)recordEventOriginal;
     auto result = original(self, event);
     subhook_install(recordEventHook);
-    Logger::Info("Success");
+    Logger::Info("Success\n");
     return result;
 }
 
@@ -82,6 +82,7 @@ static struct init {
     }
     ~init()
     {
+        std::list<subhook_t> activeHooks = GetHooks();
         std::list<subhook_t>::iterator it;
         for (it = activeHooks.begin(); it != activeHooks.end(); ++it) {
             subhook_remove(*it);

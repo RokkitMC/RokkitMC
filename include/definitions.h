@@ -5,6 +5,10 @@
 #ifndef ROKKITMC_DEFINITIONS_H
 #define ROKKITMC_DEFINITIONS_H
 #include <stdint.h>
+#include <string>
+#include "Rokkit/Event.h"
+
+using std::string;
 
 // Player Message received
 typedef uint64_t (*playerMessage_t)(uint64_t*, string, string, string, string);

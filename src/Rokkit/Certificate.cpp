@@ -1,9 +1,10 @@
 //
 // Created by mwmat on 07/12/2020.
 //
-#include "Rokkit.h"
+#include "Rokkit/Rokkit.h"
 
 typedef void (*getIdentityName_t)(string*, Rokkit::Certificate*);
+
 namespace Rokkit {
     std::string Certificate::getIdentityName() {
         std::string buff;

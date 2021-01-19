@@ -29,7 +29,7 @@ include_directories(${JNI_INCLUDE_DIRS})
 set(CMAKE_CXX_STANDARD 20)
 
 file(GLOB_RECURSE sources src/*.cpp include/*.h src/*.c include/*.hpp include/Rokkit/*.h include/Rokkit/*.hpp include/Rokkit/*.cpp)
-add_library(RokkitMC SHARED ${sources})
+add_library(RokkitMC SHARED ${sources} include/Rokkit/RokkitServer.h src/Rokkit/RokkitServer.cpp)
 message(${sources})
 include_directories(lib/jsoncpp/include/json)
 add_subdirectory(lib/jsoncpp)

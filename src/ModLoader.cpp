@@ -28,6 +28,5 @@ namespace Rokkit {
         Logger::Info("JVM initialised\n");
         this->_env = env;
         this->_jvm = jvm;
-
     }
 }

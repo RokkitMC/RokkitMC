@@ -9,10 +9,9 @@
 #include <subhook.h>
 #include <dlfcn.h>
 #include "logger.h"
+#include "Rokkit/RokkitServer.h"
 
-std::list<subhook_t> activeHooks;
-
-subhook_t Hook (void** original, void* hook, const char* funcName)
+subhook_t Hook (std::list<subhook_t> activeHooks, void** original, void* hook, const char* funcName)
 {
     *original = dlsym(RTLD_DEFAULT, funcName);
     subhook_t newHook = subhook_new(*original, hook, static_cast<subhook_flags>(0));
@@ -22,4 +21,5 @@ subhook_t Hook (void** original, void* hook, const char* funcName)
     activeHooks.insert(activeHooks.end(), newHook);
     return newHook;
 }
+
 #endif //ROKKITMC_HOOKS_H

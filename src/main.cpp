@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 #include "ModLoader.h"
 #include "Rokkit/Rokkit.h"
 #include "hooks.h"
 #include "logger.h"
 #include <definitions.h>
+=======
+#include "logger.h"
+#include "Rokkit/Rokkit.h"
+#include "hooks.h"
+#include "PluginLoader.h"
+#include <unordered_map>
+>>>>>>> origin/master
 
 using std::cout, std::string, std::endl;
 using subhook::Hook;
@@ -10,6 +18,8 @@ using subhook::Hook;
 subhook_t recordEventHook;
 void* recordEventOriginal;
 
+
+typedef std::string(*getName_t)(int64_t*);
 
 uint64_t recordEvent(int64_t* self, Rokkit::Event* event) {
 	Logger::Info("Event fired\n");

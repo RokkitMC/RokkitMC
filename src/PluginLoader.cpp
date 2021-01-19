@@ -1,11 +1,11 @@
 //
 // Created by mwmat on 09/12/2020.
 //
-#include "ModLoader.h"
+#include "PluginLoader.h"
 #include <stdlib.h>
 #include "logger.h"
 namespace Rokkit {
-    ModLoader::ModLoader(jint version) {
+    PluginLoader::PluginLoader(jint version) {
         Logger::Info("Initialising JVM\n");
         JavaVM *jvm;
         JNIEnv *env;

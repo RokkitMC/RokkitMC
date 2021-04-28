@@ -1,11 +1,5 @@
 #include "Rokkit/Rokkit.h"
 #include "hooks.h"
-<<<<<<< HEAD
-=======
-#include "logger.h"
-#include <definitions.h>
-#include "PluginLoader.h"
->>>>>>> 61944d51df3b3fb1aa885d943d691da0a8f4820b
 #include <unordered_map>
 
 using std::cout, std::string, std::endl;
@@ -14,7 +8,6 @@ using subhook::Hook;
 subhook_t recordEventHook;
 void* recordEventOriginal;
 
-<<<<<<< HEAD
 typedef uint64_t (*playerMessage_t)(uint64_t*, string, string, string, string);
 
 uint64_t playerMessage(uint64_t* self, string sender, string receiver, string message, string messageType) {
@@ -51,24 +44,6 @@ void entry() {
     clientAuthHook = Hook(&clientAuthOrig, (void*)clientAuthenticated, "_ZN20ServerNetworkHandler22_onClientAuthenticatedERK17NetworkIdentifierRK11Certificate");
     playerMessageHook = Hook(&playerMessageOrig, (void*) playerMessage, "_ZN17MinecraftEventing22fireEventPlayerMessageERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_S7_");
     //Do JVM init last
-=======
-typedef std::string(*getName_t)(int64_t*);
-
-uint64_t recordEvent(int64_t* self, Rokkit::Event* event) {
-	Logger::Info("Event fired\n");
-
-	Json::Value* properties = event->propertiesAsJsonValue();
-
-	if(properties != NULL) {
-		cout << properties->toStyledString() << endl;
-	}
-
-	subhook_remove(recordEventHook);
-	auto original = (recordEvent_t)recordEventOriginal;
-	auto result = original(self, event);
-	subhook_install(recordEventHook);
-	return result;
->>>>>>> 61944d51df3b3fb1aa885d943d691da0a8f4820b
 }
 
 static struct init {

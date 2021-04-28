@@ -4,7 +4,6 @@
 
 #include <Rokkit/RokkitServer.h>
 #include <definitions.h>
-#include <hooks.h>
 
 #include "Rokkit/Rokkit.h"
 using namespace Rokkit;

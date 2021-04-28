@@ -13,6 +13,7 @@
 #endif
 
 #include "logger.h"
+#include "Rokkit/RokkitServer.h"
 
 void* GetSymbol(const char* funcName);
 subhook_t Hook(void** original, void* hook, const char* funcName);

@@ -4,7 +4,10 @@
 
 #ifndef ROKKITMC_ROKKIT_H
 #define ROKKITMC_ROKKIT_H
+
 #include "Player.h"
 #include "Certificate.h"
 #include "Event.h"
+#include "RokkitServer.h"
+
 #endif //ROKKITMC_ROKKIT_H

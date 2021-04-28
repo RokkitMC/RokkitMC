@@ -5,6 +5,8 @@
 #ifndef ROKKITMC_CERTIFICATE_H
 #define ROKKITMC_CERTIFICATE_H
 #include <dlfcn.h>
+#include <string>
+
 namespace Rokkit {
     class Certificate {
     public:
